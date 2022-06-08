@@ -11,6 +11,9 @@
   <a href="https://github.com/kfurtak1024/jcombi/workflows/CodeQL">
     <img src="https://github.com/kfurtak1024/jcombi/workflows/CodeQL/badge.svg">
   </a>
+  <a>
+    <img src="https://img.shields.io/badge/jdk-11-brightgreen.svg?logo=java">
+  </a>
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg">
   </a>
