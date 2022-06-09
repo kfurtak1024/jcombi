@@ -4,11 +4,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <name>jcombi</name>
-    <version>1.0.0-SNAPSHOT</version>
     <groupId>dev.krzysztoffurtak</groupId>
     <artifactId>jcombi</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>jcombi</name>
     <packaging>jar</packaging>
+    <url>https://github.com/kfurtak1024/jcombi</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/kfurtak1024/jcombi</url>
+        <connection>scm:git:git://github.com/kfurtak1024/jcombi.git</connection>
+        <developerConnection>scm:git:git@github.com:kfurtak1024/jcombi.git</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Krzysztof Furtak</name>
+            <email>contact@krzysztoffurtak.dev</email>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

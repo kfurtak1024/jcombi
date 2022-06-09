@@ -1,6 +1,27 @@
+/*
+ * Copyright (c) 2022 Krzysztof Furtak
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
 package dev.krzysztoffurtak.jcombi;
 
-public class Combinatorics {
+public final class Combinatorics {
     private static final long[] FACTORIALS = new long[] {
             1L,
             1L,
@@ -33,6 +54,21 @@ public class Combinatorics {
         return CombinationsBuilder.builder();
     }
 
+    /**
+     * Returns {@code n!} (the factorial of {@code n}).
+     *
+     * <p>
+     * <ul>
+     * <li>{@code n!} is the product of all positive integers less than or equal to {@code n}</li>
+     * <li>The value of {@code 0!} is {@code 1}</li>
+     * </ul>
+     * </p>
+     *
+     * @param n {@code n}
+     * @return {@code n!}
+     * @throws IllegalArgumentException if {@code n < 0}
+     * @throws ArithmeticException if {@code n!} cannot be represented as long (that's the case for {@code n > 20})
+     */
     public static long factorial(int n) {
         if (n < 0) {
             throw new IllegalArgumentException("n must be greater or equal to zero");
@@ -43,6 +79,20 @@ public class Combinatorics {
         return FACTORIALS[n];
     }
 
+    /**
+     * Returns binomial coefficient of {@code n} and {@code k} (<i>{@code n} choose {@code k}</i>).
+     *
+     * <p>
+     * <ul>
+     * <li><i>{@code n} choose {@code k}</i> ({@code nCk}) is equal to {@code n!/(k!*(n-k)!)}</li>
+     * </ul>
+     * </p>
+     *
+     * @param n {@code n}
+     * @param k {@code k}
+     * @return binomial coefficient of {@code n} and {@code k}
+     * @throws IllegalArgumentException if {@code n < 0} or {@code k < 0} or {@code k > n}
+     */
     public static long binomial(int n, int k) {
         if (n < 0) {
             throw new IllegalArgumentException("n must be greater or equal to zero");
