@@ -14,6 +14,9 @@
   <a href="https://lgtm.com/projects/g/kfurtak1024/jcombi">
     <img src="https://img.shields.io/lgtm/grade/java/github/kfurtak1024/jcombi">
   </a>
+  <a href="https://app.codecov.io/gh/kfurtak1024/jcombi">
+    <img src="https://codecov.io/gh/kfurtak1024/jcombi/branch/main/graph/badge.svg">
+  </a>
   <a>
     <img src="https://img.shields.io/badge/jdk-11-brightgreen.svg?logo=java">
   </a>
