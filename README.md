@@ -2,9 +2,6 @@
   jcombi
 </h1>
 <p align="center">
-  <a href="https://github.com/kfurtak1024/jcombi/releases/latest">
-    <img src="https://img.shields.io/github/v/release/kfurtak1024/jcombi">
-  </a>
   <a href="https://github.com/kfurtak1024/jcombi/actions">
     <img src="https://github.com/kfurtak1024/jcombi/workflows/Java%20CI%20with%20Maven/badge.svg">
   </a>
