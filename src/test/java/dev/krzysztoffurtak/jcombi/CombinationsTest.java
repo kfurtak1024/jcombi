@@ -137,6 +137,23 @@ public class CombinationsTest {
         }
 
         @Test
+        @DisplayName("Combinations of {A, B, C, D} choose 3")
+        void verifyCombinationsOfInputSetWithFourElementsChooseThree() {
+            final var combinations = Combinatorics.combinations()
+                    .of("A", "B", "C", "D")
+                    .choose(3);
+            assertThat(combinations).containsExactly(
+                    List.of("A", "B", "C"),
+                    List.of("A", "B", "D"),
+                    List.of("A", "C", "D"),
+                    List.of("B", "C", "D")
+            );
+            assertThat(combinations.n()).isEqualTo(4);
+            assertThat(combinations.k()).isEqualTo(3);
+            assertThat(combinations.count()).isEqualTo(4);
+        }
+
+        @Test
         @DisplayName("Negative value of combination length (k < 0)")
         void verifyThatExceptionIsThrownWhenCombinationLengthIsNegative() {
             final Exception exception = assertThrows(
@@ -248,6 +265,21 @@ public class CombinationsTest {
             assertThat(combinations.n()).isEqualTo(4);
             assertThat(combinations.k()).isEqualTo(2);
             assertThat(combinations.count()).isEqualTo(6);
+        }
+
+        @Test
+        @DisplayName("Combinations of 4 choose 3")
+        void verifyCombinationsOfInputSetWithFourElementsChooseThree() {
+            final var combinations = Combinatorics.combinations(4, 3);
+            assertThat(combinations).containsExactly(
+                    new int[] { 0, 1, 2 },
+                    new int[] { 0, 1, 3 },
+                    new int[] { 0, 2, 3 },
+                    new int[] { 1, 2, 3 }
+            );
+            assertThat(combinations.n()).isEqualTo(4);
+            assertThat(combinations.k()).isEqualTo(3);
+            assertThat(combinations.count()).isEqualTo(4);
         }
 
         @Test

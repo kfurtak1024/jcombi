@@ -84,7 +84,11 @@ public final class Combinatorics {
      *
      * <p>
      * <ul>
-     * <li><i>{@code n} choose {@code k}</i> ({@code nCk}) is equal to {@code n!/(k!*(n-k)!)}</li>
+     * <li><i>{@code n} choose {@code k}</i> ({@code nCk}) is equal to <pre>{@code
+     *     n!
+     * ---------
+     * k!*(n-k)!}
+     * </pre></li>
      * </ul>
      * </p>
      *

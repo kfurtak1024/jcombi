@@ -49,10 +49,20 @@ public class Combinations<T> implements Iterable<T> {
         this.toCombinationFunc = toCombinationFunc;
     }
 
+    /**
+     * Returns the size of the input set from which combinations are selected.
+     *
+     * @return size of the input set
+     */
     public int n() {
         return n;
     }
 
+    /**
+     * Returns the size of the combinations to be enumerated.
+     *
+     * @return size of the combination
+     */
     public int k() {
         return k;
     }
@@ -63,10 +73,20 @@ public class Combinations<T> implements Iterable<T> {
 
     // TODO: Implement spliterator
 
+    /**
+     * Returns a sequential {@code Stream} with all combinations of this as its source.
+     *
+     * @return sequential {@code Stream} over all combinations
+     */
     public Stream<T> stream() {
         return StreamSupport.stream(spliterator(), false);
     }
 
+    /**
+     * Returns an iterator over combinations of type {@code T}.
+     *
+     * @return an {@code Iterator}
+     */
     @Override
     public Iterator<T> iterator() {
         return empty() ? emptyIterator() : new Iter();
