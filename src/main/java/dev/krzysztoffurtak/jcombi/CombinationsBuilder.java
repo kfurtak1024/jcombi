@@ -27,15 +27,15 @@ import java.util.stream.Collectors;
 
 public interface CombinationsBuilder<T> extends InputSetBuilder<T, CombinationsBuilder.Builder<T>> {
     interface Builder<T> {
-        Combinations<List<T>> choose(int k);
+        CombinationsWithoutRepetition<List<T>> choose(int k);
     }
 
-    static Combinations<int[]> build(int n, int k) {
-        return new Combinations<>(n, k, index -> Arrays.copyOf(index, index.length - 1));
+    static CombinationsWithoutRepetition<int[]> build(int n, int k) {
+        return new CombinationsWithoutRepetition<>(n, k, index -> Arrays.copyOf(index, index.length - 1));
     }
 
     static <T> CombinationsBuilder<T> builder() {
-        return inputSet -> (Builder<T>) k -> new Combinations<>(inputSet.size(), k, index -> Arrays.stream(index)
+        return inputSet -> (Builder<T>) k -> new CombinationsWithoutRepetition<>(inputSet.size(), k, index -> Arrays.stream(index)
                 .limit(index.length - 1)
                 .mapToObj(inputSet::get)
                 .collect(Collectors.toUnmodifiableList()));

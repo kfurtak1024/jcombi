@@ -41,8 +41,8 @@ class CombinatoricsTest {
     @DisplayName("Test builders for combinations")
     class CombinationsTest {
         @Test
-        @DisplayName("Should create combinations with use of builder")
-        void testCombinations() {
+        @DisplayName("Should create combinations without repetition with use of builder")
+        void testCombinationsWithoutRepetition() {
             // Given
             final var n = 4;
             final var k = 2;
@@ -51,12 +51,12 @@ class CombinatoricsTest {
             final var combinations = Combinatorics.combinations(n, k);
 
             // Then
-            assertThat(combinations).isInstanceOf(Combinations.class);
+            assertThat(combinations).isInstanceOf(CombinationsWithoutRepetition.class);
         }
 
         @Test
-        @DisplayName("Should create combinations with use of builder")
-        void testCombinationsBuilder() {
+        @DisplayName("Should create combinations without repetition with use of builder")
+        void testCombinationsWithoutRepetitionBuilder() {
             // Given
             final var inputSet = new String[] { "A", "B", "C" };
             final var k = 2;
@@ -66,7 +66,52 @@ class CombinatoricsTest {
                     Combinatorics.<String>combinations().of(inputSet).choose(k);
 
             // Then
-            assertThat(combinations).isInstanceOf(Combinations.class);
+            assertThat(combinations).isInstanceOf(CombinationsWithoutRepetition.class);
+        }
+
+        @Test
+        @DisplayName("Should create combinations with repetition with use of builder")
+        void testCombinationsWithRepetition() {
+            // Given
+            final var n = 4;
+            final var k = 2;
+
+            // When
+            final var combinations = Combinatorics.combinations(n, k).withRepetition();
+
+            // Then
+            assertThat(combinations).isInstanceOf(CombinationsWithRepetition.class);
+        }
+
+        @Test
+        @DisplayName("Should create combinations with repetition with use of builder")
+        void testCombinationsWithRepetitionBuilder() {
+            // Given
+            final var inputSet = new String[] { "A", "B", "C" };
+            final var k = 2;
+
+            // When
+            final var combinations =
+                    Combinatorics.<String>combinations().of(inputSet).choose(k).withRepetition();
+
+            // Then
+            assertThat(combinations).isInstanceOf(CombinationsWithRepetition.class);
+        }
+
+        @Test
+        @DisplayName("It should be allowed to create combinations without repetition from combinations with repetition")
+        void testCombinationsWithRepetitionTurnedIntoCombinationsWithoutRepetition() {
+            // Given
+            final var n = 4;
+            final var k = 2;
+
+            // When
+            final var combinations = Combinatorics.combinations(n, k)
+                    .withRepetition()
+                    .withoutRepetition();
+
+            // Then
+            assertThat(combinations).isInstanceOf(CombinationsWithoutRepetition.class);
         }
     }
 

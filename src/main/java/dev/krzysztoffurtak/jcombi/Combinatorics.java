@@ -46,7 +46,7 @@ public final class Combinatorics {
             2432902008176640000L
     };
 
-    public static Combinations<int[]> combinations(int n, int k) {
+    public static CombinationsWithoutRepetition<int[]> combinations(int n, int k) {
         return CombinationsBuilder.build(n, k);
     }
 

@@ -28,20 +28,17 @@ import java.util.stream.StreamSupport;
 
 import static java.util.Collections.emptyIterator;
 
-public class Combinations<T> implements Iterable<T> {
-    private final int n;
-    private final int k;
-    private final Function<int[], T> toCombinationFunc;
+public abstract class Combinations<T> implements Iterable<T> {
+    protected final int n;
+    protected final int k;
+    protected final Function<int[], T> toCombinationFunc;
 
-    Combinations(int n, int k, Function<int[], T> toCombinationFunc) {
+    protected Combinations(int n, int k, Function<int[], T> toCombinationFunc) {
         if (n < 0) {
             throw new IllegalArgumentException("n must be greater of equal to zero");
         }
         if (k < 0) {
             throw new IllegalArgumentException("k must be greater of equal to zero");
-        }
-        if (k > n) {
-            throw new IllegalArgumentException("k must be less or equal to n");
         }
 
         this.n = n;
@@ -67,11 +64,7 @@ public class Combinations<T> implements Iterable<T> {
         return k;
     }
 
-    public long count() {
-        return empty() ? 0 : Combinatorics.binomial(n, k);
-    }
-
-    // TODO: Implement spliterator
+    public abstract long count();
 
     /**
      * Returns a sequential {@code Stream} with all combinations of this as its source.
@@ -89,53 +82,12 @@ public class Combinations<T> implements Iterable<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        return empty() ? emptyIterator() : new Iter();
+        return empty() ? emptyIterator() : newIterator();
     }
 
-    private boolean empty() {
+    protected boolean empty() {
         return n == 0 || k == 0;
     }
 
-    private class Iter implements Iterator<T> {
-        private final int[] index;
-        private boolean nextAvailable;
-
-        Iter() {
-            this.index = new int[k + 1];
-            for (int i = 0; i < k; i++) {
-                index[i] = i;
-            }
-            index[k] = n;
-            nextAvailable = true;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return nextAvailable;
-        }
-
-        @Override
-        public T next() {
-            int i = k - 1;
-            final T combination = toCombinationFunc.apply(index);
-
-            while (index[i] + 1 == index[i + 1]) {
-                i--;
-                if (i < 0) {
-                    nextAvailable = false;
-                    break;
-                }
-            }
-
-            if (nextAvailable) {
-                index[i]++;
-
-                for (; i < k - 1; i++) {
-                    index[i + 1] = index[i] + 1;
-                }
-            }
-
-            return combination;
-        }
-    }
+    protected abstract Iterator<T> newIterator();
 }
