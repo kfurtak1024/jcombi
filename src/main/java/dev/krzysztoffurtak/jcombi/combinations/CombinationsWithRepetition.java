@@ -1,16 +1,19 @@
-package dev.krzysztoffurtak.jcombi;
+package dev.krzysztoffurtak.jcombi.combinations;
+
+import dev.krzysztoffurtak.jcombi.Combinatorics;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Function;
 
 public class CombinationsWithRepetition<T> extends Combinations<T> {
-    CombinationsWithRepetition(int n, int k, Function<int[], T> toCombinationFunc) {
-        super(n, k, toCombinationFunc);
+
+    public CombinationsWithRepetition(int n, int k, Function<int[], T> combinationVisitor) {
+        super(n, k, combinationVisitor);
     }
 
     public CombinationsWithoutRepetition<T> withoutRepetition() {
-        return new CombinationsWithoutRepetition<>(n, k, toCombinationFunc);
+        return new CombinationsWithoutRepetition<>(n, k, combinationVisitor);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class CombinationsWithRepetition<T> extends Combinations<T> {
         @Override
         public T next() {
             int i = k - 1;
-            final T combination = toCombinationFunc.apply(index);
+            final T combination = combinationVisitor.apply(index);
 
             while (index[i] == index[i + 1]) {
                 i--;

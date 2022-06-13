@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi;
+package dev.krzysztoffurtak.jcombi.combinations;
 
 import java.util.Iterator;
 import java.util.function.Function;
@@ -31,19 +31,22 @@ import static java.util.Collections.emptyIterator;
 public abstract class Combinations<T> implements Iterable<T> {
     protected final int n;
     protected final int k;
-    protected final Function<int[], T> toCombinationFunc;
+    protected final Function<int[], T> combinationVisitor;
 
-    protected Combinations(int n, int k, Function<int[], T> toCombinationFunc) {
+    protected Combinations(int n, int k, Function<int[], T> combinationVisitor) {
         if (n < 0) {
             throw new IllegalArgumentException("n must be greater of equal to zero");
         }
         if (k < 0) {
             throw new IllegalArgumentException("k must be greater of equal to zero");
         }
+        if (combinationVisitor == null) {
+            throw new IllegalArgumentException("combinationVisitor cannot be null");
+        }
 
         this.n = n;
         this.k = k;
-        this.toCombinationFunc = toCombinationFunc;
+        this.combinationVisitor = combinationVisitor;
     }
 
     /**

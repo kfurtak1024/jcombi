@@ -19,7 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi;
+package dev.krzysztoffurtak.jcombi.combinations;
+
+import dev.krzysztoffurtak.jcombi.InputSetBuilder;
 
 import java.util.Arrays;
 import java.util.List;

@@ -21,6 +21,9 @@
  */
 package dev.krzysztoffurtak.jcombi;
 
+import dev.krzysztoffurtak.jcombi.combinations.CombinationsBuilder;
+import dev.krzysztoffurtak.jcombi.combinations.CombinationsWithoutRepetition;
+
 public final class Combinatorics {
     private static final long[] FACTORIALS = new long[] {
             1L,

@@ -19,22 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi;
+package dev.krzysztoffurtak.jcombi.combinations;
+
+import dev.krzysztoffurtak.jcombi.Combinatorics;
 
 import java.util.Iterator;
 import java.util.function.Function;
 
 public class CombinationsWithoutRepetition<T> extends Combinations<T> {
 
-    CombinationsWithoutRepetition(int n, int k, Function<int[], T> toCombinationFunc) {
-        super(n, k, toCombinationFunc);
+    public CombinationsWithoutRepetition(int n, int k, Function<int[], T> combinationVisitor) {
+        super(n, k, combinationVisitor);
         if (k > n) {
             throw new IllegalArgumentException("k must be less or equal to n");
         }
     }
 
     public CombinationsWithRepetition<T> withRepetition() {
-        return new CombinationsWithRepetition<>(n, k, toCombinationFunc);
+        return new CombinationsWithRepetition<>(n, k, combinationVisitor);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class CombinationsWithoutRepetition<T> extends Combinations<T> {
         @Override
         public T next() {
             int i = k - 1;
-            final T combination = toCombinationFunc.apply(index);
+            final T combination = combinationVisitor.apply(index);
 
             while (index[i] + 1 == index[i + 1]) {
                 i--;
