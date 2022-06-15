@@ -95,7 +95,7 @@ public class PermutationsWithoutRepetition<T> implements Iterable<T> {
             final T permutation = permutationsVisitor.apply(index);
 
             int i = n - 1;
-            while ((i > 0) && (index[i - 1] >= index[i])) {
+            while (i > 0 && index[i - 1] >= index[i]) {
                 i--;
             }
 

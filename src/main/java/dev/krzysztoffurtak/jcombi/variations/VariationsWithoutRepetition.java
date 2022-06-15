@@ -71,7 +71,7 @@ public class VariationsWithoutRepetition<T> extends Variations<T> {
             int tailmax = index[n - 1];
             int end = k;
 
-            while ((end > 0) && (index[end - 1] >= tailmax)) {
+            while (end > 0 && index[end - 1] >= tailmax) {
                 tailmax = index[--end];
             }
 
@@ -81,12 +81,12 @@ public class VariationsWithoutRepetition<T> extends Variations<T> {
 
                 if (i >= index[n - 1]) {
                     j = end;
-                    while ((j + 1 < k) && (index[j + 1] > i)) {
+                    while (j + 1 < k && index[j + 1] > i) {
                         j++;
                     }
                 } else {
                     j = n - 1;
-                    while ((j > k) && (index[j - 1] > i)) {
+                    while (j > k && index[j - 1] > i) {
                         j--;
                     }
                 }

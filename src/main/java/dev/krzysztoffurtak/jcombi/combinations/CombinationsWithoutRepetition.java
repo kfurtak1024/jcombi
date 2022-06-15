@@ -65,7 +65,7 @@ public class CombinationsWithoutRepetition<T> extends Combinations<T> {
             final T combination = combinationsVisitor.apply(index);
             int i = k - 1;
 
-            while ((i >= 0) && (indexAt(i) + 1 == indexAt(i + 1))) {
+            while (i >= 0 && indexAt(i) + 1 == indexAt(i + 1)) {
                 i--;
             }
 

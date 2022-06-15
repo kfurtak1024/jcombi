@@ -58,7 +58,7 @@ public class VariationsWithRepetition<T> extends Variations<T> {
             final T variation = variationsVisitor.apply(index);
             int i = k - 1;
 
-            while ((i >= 0) && (indexAt(i) == indexAt(i + 1))) {
+            while (i >= 0 && indexAt(i) == indexAt(i + 1)) {
                 i--;
             }
 
