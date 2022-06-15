@@ -21,7 +21,10 @@
  */
 package dev.krzysztoffurtak.jcombi;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public interface InputSetBuilder<T, B> {
     B of(List<T> inputSet);
@@ -30,4 +33,15 @@ public interface InputSetBuilder<T, B> {
     default B of(T... elements) {
         return of(List.of(elements));
     }
+
+    // TODO: Rename it!
+    static <T> Function<int[], List<T>> sequenceFromInputSet(List<T> inputSet) {
+        return index -> Arrays.stream(index).mapToObj(inputSet::get).collect(Collectors.toUnmodifiableList());
+    }
+
+    // TODO: Rename it!
+    static Function<int[], int[]> sequenceFromIndexes() {
+        return index -> Arrays.copyOf(index, index.length);
+    }
+
 }

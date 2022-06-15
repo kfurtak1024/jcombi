@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi.combinations;
+package dev.krzysztoffurtak.jcombi.variations;
 
 import java.util.Iterator;
 import java.util.function.Function;
@@ -28,29 +28,29 @@ import java.util.stream.StreamSupport;
 
 import static java.util.Collections.emptyIterator;
 
-public abstract class Combinations<T> implements Iterable<T> {
+public abstract class Variations<T> implements Iterable<T> {
     protected final int n;
     protected final int k;
-    protected final Function<int[], T> combinationsVisitor;
+    protected final Function<int[], T> variationsVisitor;
 
-    protected Combinations(int n, int k, Function<int[], T> combinationsVisitor) {
+    protected Variations(int n, int k, Function<int[], T> variationsVisitor) {
         if (n < 0) {
             throw new IllegalArgumentException("n must be greater of equal to zero");
         }
         if (k < 0) {
             throw new IllegalArgumentException("k must be greater of equal to zero");
         }
-        if (combinationsVisitor == null) {
-            throw new IllegalArgumentException("combinationsVisitor cannot be null");
+        if (variationsVisitor == null) {
+            throw new IllegalArgumentException("variationsVisitor cannot be null");
         }
 
         this.n = n;
         this.k = k;
-        this.combinationsVisitor = combinationsVisitor;
+        this.variationsVisitor = variationsVisitor;
     }
 
     /**
-     * Returns the size of the input set from which combinations are selected.
+     * Returns the size of the input set from which variations are selected.
      *
      * @return size of the input set
      */
@@ -59,9 +59,9 @@ public abstract class Combinations<T> implements Iterable<T> {
     }
 
     /**
-     * Returns the size of the combinations to be enumerated.
+     * Returns the size of the variations to be enumerated.
      *
-     * @return size of the combination
+     * @return size of the variation
      */
     public int k() {
         return k;
@@ -70,16 +70,16 @@ public abstract class Combinations<T> implements Iterable<T> {
     public abstract long count();
 
     /**
-     * Returns a sequential {@code Stream} with all combinations of this as its source.
+     * Returns a sequential {@code Stream} with all variations of this as its source.
      *
-     * @return sequential {@code Stream} over all combinations
+     * @return sequential {@code Stream} over all variations
      */
     public Stream<T> stream() {
         return StreamSupport.stream(spliterator(), false);
     }
 
     /**
-     * Returns an iterator over combinations of type {@code T}.
+     * Returns an iterator over variations of type {@code T}.
      *
      * @return an {@code Iterator}
      */

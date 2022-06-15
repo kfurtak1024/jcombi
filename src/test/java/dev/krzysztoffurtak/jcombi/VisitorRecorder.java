@@ -19,23 +19,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi.combinations;
+package dev.krzysztoffurtak.jcombi;
 
-import dev.krzysztoffurtak.jcombi.InputSetBuilder;
-
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.function.Function;
 
-public interface CombinationsBuilder<T> extends InputSetBuilder<T, CombinationsBuilder.Builder<T>> {
-    interface Builder<T> {
-        CombinationsWithoutRepetition<List<T>> choose(int k);
+import static org.assertj.core.api.Assertions.assertThat;
+
+
+public class VisitorRecorder<T> implements Function<int[], T> {
+    private final List<int[]> recordedSequences;
+
+    public VisitorRecorder() {
+        this.recordedSequences = new LinkedList<>();
     }
 
-    static CombinationsWithoutRepetition<int[]> build(int n, int k) {
-        return new CombinationsWithoutRepetition<>(n, k, InputSetBuilder.sequenceFromIndexes());
+    @Override
+    public T apply(int[] ints) {
+        recordedSequences.add(Arrays.copyOf(ints, ints.length));
+        return null;
     }
 
-    static <T> CombinationsBuilder<T> builder() {
-        return inputSet -> (Builder<T>) k -> new CombinationsWithoutRepetition<>(
-                inputSet.size(), k, InputSetBuilder.sequenceFromInputSet(inputSet));
+    public void verify(int[][] expectedSequences) {
+        assertThat(recordedSequences.size()).isEqualTo(expectedSequences.length);
+        for (int i = 0; i < expectedSequences.length; i++) {
+            assertThat(recordedSequences.get(i)).isEqualTo(expectedSequences[i]);
+        }
     }
 }

@@ -21,6 +21,7 @@
  */
 package dev.krzysztoffurtak.jcombi.combinations;
 
+import dev.krzysztoffurtak.jcombi.VisitorRecorder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,24 +30,42 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CombinationsWithoutRepetitionTest {
-    private CombinationVisitorRecorder<Object> combinationVisitorRecorder;
+    private VisitorRecorder<Object> combinationsVisitorRecorder;
 
     @BeforeEach
     void setUp() {
-        combinationVisitorRecorder = new CombinationVisitorRecorder<>();
+        combinationsVisitorRecorder = new VisitorRecorder<>();
+    }
+
+    @Test
+    @DisplayName("Combinations without repetition of 1 choose 1")
+    void verifyCombinationsOfInputSetWithOneElementChooseOne() {
+        // Given
+        final var combinations = new CombinationsWithoutRepetition<>(1, 1, combinationsVisitorRecorder);
+
+        // When
+        combinations.forEach(o -> {});
+
+        // Then
+        combinationsVisitorRecorder.verify(new int[][]{
+                { 0 }
+        });
+        assertThat(combinations.n()).isEqualTo(1);
+        assertThat(combinations.k()).isEqualTo(1);
+        assertThat(combinations.count()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("Combinations without repetition of 3 choose 1")
     void verifyCombinationsOfInputSetWithThreeElementsChooseOne() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(3, 1, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(3, 1, combinationsVisitorRecorder);
 
         // When
         combinations.forEach(o -> {});
 
         // Then
-        combinationVisitorRecorder.verify(new int[][]{
+        combinationsVisitorRecorder.verify(new int[][]{
                 { 0 },
                 { 1 },
                 { 2 }
@@ -57,34 +76,36 @@ public class CombinationsWithoutRepetitionTest {
     }
 
     @Test
-    @DisplayName("Combinations without repetition of 3 choose 1")
+    @DisplayName("Stream of combinations without repetition of 3 choose 1")
     void verifyStreamOfCombinationsOfInputSetWithThreeElementsChooseOne() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(3, 1, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(3, 1, combinationsVisitorRecorder);
 
         // When
-        combinations.forEach(o -> {});
+        combinations.stream().forEach(o -> {});
 
         // Then
-        combinationVisitorRecorder.verify(new int[][]{
+        combinationsVisitorRecorder.verify(new int[][]{
                 { 0 },
                 { 1 },
                 { 2 }
         });
-        assertThat(combinations.stream().count()).isEqualTo(3);
+        assertThat(combinations.n()).isEqualTo(3);
+        assertThat(combinations.k()).isEqualTo(1);
+        assertThat(combinations.count()).isEqualTo(3);
     }
 
     @Test
     @DisplayName("Combinations without repetition of 3 choose 2")
     void verifyCombinationsOfInputSetWithThreeElementsChooseTwo() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(3, 2, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(3, 2, combinationsVisitorRecorder);
 
         // When
         combinations.forEach(o -> {});
 
         // Then
-        combinationVisitorRecorder.verify(new int[][]{
+        combinationsVisitorRecorder.verify(new int[][]{
                 { 0, 1 },
                 { 0, 2 },
                 { 1, 2 }
@@ -98,13 +119,13 @@ public class CombinationsWithoutRepetitionTest {
     @DisplayName("Combinations without repetition of 3 choose 3")
     void verifyCombinationsOfInputSetWithThreeElementsChooseThree() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(3, 3, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(3, 3, combinationsVisitorRecorder);
 
         // When
         combinations.forEach(o -> {});
 
         // Then
-        combinationVisitorRecorder.verify(new int[][]{
+        combinationsVisitorRecorder.verify(new int[][]{
                 { 0, 1, 2 }
         });
         assertThat(combinations.n()).isEqualTo(3);
@@ -116,13 +137,13 @@ public class CombinationsWithoutRepetitionTest {
     @DisplayName("Combinations without repetition of 4 choose 2")
     void verifyCombinationsOfInputSetWithFourElementsChooseTwo() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(4, 2, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(4, 2, combinationsVisitorRecorder);
 
         // When
         combinations.forEach(o -> {});
 
         // Then
-        combinationVisitorRecorder.verify(new int[][]{
+        combinationsVisitorRecorder.verify(new int[][]{
                 { 0, 1 },
                 { 0, 2 },
                 { 0, 3 },
@@ -139,13 +160,13 @@ public class CombinationsWithoutRepetitionTest {
     @DisplayName("Combinations without repetition of 4 choose 3")
     void verifyCombinationsOfInputSetWithFourElementsChooseThree() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(4, 3, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(4, 3, combinationsVisitorRecorder);
 
         // When
         combinations.forEach(o -> {});
 
         // Then
-        combinationVisitorRecorder.verify(new int[][]{
+        combinationsVisitorRecorder.verify(new int[][]{
                 { 0, 1, 2 },
                 { 0, 1, 3 },
                 { 0, 2, 3 },
@@ -157,10 +178,10 @@ public class CombinationsWithoutRepetitionTest {
     }
 
     @Test
-    @DisplayName("Should allow to convert combination without repetition to combination with repetition")
-    void shouldAllowToConvertCombinationWithoutRepetitionToCombinationWithRepetition() {
+    @DisplayName("Should allow to convert combinations without repetition to combinations with repetition")
+    void shouldAllowToConvertCombinationsWithoutRepetitionToCombinationsWithRepetition() {
         // Given
-        final var combinations = new CombinationsWithoutRepetition<>(2, 1, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(2, 1, combinationsVisitorRecorder);
 
         // When
         final var combinationsWithRepetition = combinations.withRepetition();
@@ -172,7 +193,7 @@ public class CombinationsWithoutRepetitionTest {
     @Test
     @DisplayName("Combinations without repetition of 0 choose 0")
     void verifyCombinationsOfEmptyInputSetChooseZero() {
-        final var combinations = new CombinationsWithoutRepetition<>(0, 0, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(0, 0, combinationsVisitorRecorder);
         assertThat(combinations).isEmpty();
         assertThat(combinations.n()).isEqualTo(0);
         assertThat(combinations.k()).isEqualTo(0);
@@ -182,7 +203,7 @@ public class CombinationsWithoutRepetitionTest {
     @Test
     @DisplayName("Combinations without repetition of 3 choose 0")
     void verifyCombinationsOfInputSetWithThreeElementsChooseZero() {
-        final var combinations = new CombinationsWithoutRepetition<>(3, 0, combinationVisitorRecorder);
+        final var combinations = new CombinationsWithoutRepetition<>(3, 0, combinationsVisitorRecorder);
         assertThat(combinations).isEmpty();
         assertThat(combinations.n()).isEqualTo(3);
         assertThat(combinations.k()).isEqualTo(0);
@@ -194,7 +215,7 @@ public class CombinationsWithoutRepetitionTest {
     void verifyThatExceptionIsThrownWhenNIsNegative() {
         final Exception exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new CombinationsWithoutRepetition<>(-1, 0, combinationVisitorRecorder));
+                () -> new CombinationsWithoutRepetition<>(-1, 0, combinationsVisitorRecorder));
         assertThat(exception.getMessage()).isEqualTo("n must be greater of equal to zero");
     }
 
@@ -203,7 +224,7 @@ public class CombinationsWithoutRepetitionTest {
     void verifyThatExceptionIsThrownWhenKIsNegative() {
         final Exception exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new CombinationsWithoutRepetition<>(0, -1, combinationVisitorRecorder));
+                () -> new CombinationsWithoutRepetition<>(0, -1, combinationsVisitorRecorder));
         assertThat(exception.getMessage()).isEqualTo("k must be greater of equal to zero");
     }
 
@@ -212,16 +233,16 @@ public class CombinationsWithoutRepetitionTest {
     void verifyThatExceptionIsThrownWhenCombinationLengthIsInvalid() {
         final Exception exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> new CombinationsWithoutRepetition<>(3, 4, combinationVisitorRecorder));
+                () -> new CombinationsWithoutRepetition<>(3, 4, combinationsVisitorRecorder));
         assertThat(exception.getMessage()).isEqualTo("k must be less or equal to n");
     }
 
     @Test
-    @DisplayName("Combination visitor is null")
-    void verifyThatExceptionIsThrownWhenCombinationVisitorIsNull() {
+    @DisplayName("Combinations visitor is null")
+    void verifyThatExceptionIsThrownWhenCombinationsVisitorIsNull() {
         final Exception exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> new CombinationsWithoutRepetition<>(2, 1, null));
-        assertThat(exception.getMessage()).isEqualTo("combinationVisitor cannot be null");
+        assertThat(exception.getMessage()).isEqualTo("combinationsVisitor cannot be null");
     }
 }

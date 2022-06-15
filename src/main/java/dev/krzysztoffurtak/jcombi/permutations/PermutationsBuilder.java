@@ -19,23 +19,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi.combinations;
+package dev.krzysztoffurtak.jcombi.permutations;
 
 import dev.krzysztoffurtak.jcombi.InputSetBuilder;
 
 import java.util.List;
 
-public interface CombinationsBuilder<T> extends InputSetBuilder<T, CombinationsBuilder.Builder<T>> {
+public interface PermutationsBuilder<T> extends InputSetBuilder<T, PermutationsBuilder.Builder<T>> {
     interface Builder<T> {
-        CombinationsWithoutRepetition<List<T>> choose(int k);
+        PermutationsWithoutRepetition<List<T>> withoutRepetition();
     }
 
-    static CombinationsWithoutRepetition<int[]> build(int n, int k) {
-        return new CombinationsWithoutRepetition<>(n, k, InputSetBuilder.sequenceFromIndexes());
+    static PermutationsWithoutRepetition<int[]> build(int n) {
+        return new PermutationsWithoutRepetition<>(n, InputSetBuilder.sequenceFromIndexes());
     }
 
-    static <T> CombinationsBuilder<T> builder() {
-        return inputSet -> (Builder<T>) k -> new CombinationsWithoutRepetition<>(
-                inputSet.size(), k, InputSetBuilder.sequenceFromInputSet(inputSet));
+    static <T> PermutationsBuilder<T> builder() {
+        return inputSet -> (Builder<T>) () -> new PermutationsWithoutRepetition<>(
+                inputSet.size(), InputSetBuilder.sequenceFromInputSet(inputSet));
     }
 }

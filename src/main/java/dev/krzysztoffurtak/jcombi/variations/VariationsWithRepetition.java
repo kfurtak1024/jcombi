@@ -19,27 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi.combinations;
-
-import dev.krzysztoffurtak.jcombi.Combinatorics;
+package dev.krzysztoffurtak.jcombi.variations;
 
 import java.util.Iterator;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-public class CombinationsWithRepetition<T> extends Combinations<T> {
-
-    public CombinationsWithRepetition(int n, int k, Function<int[], T> combinationsVisitor) {
-        super(n, k, combinationsVisitor);
+public class VariationsWithRepetition<T> extends Variations<T> {
+    public VariationsWithRepetition(int n, int k, Function<int[], T> variationsVisitor) {
+        super(n, k, variationsVisitor);
     }
 
-    public CombinationsWithoutRepetition<T> withoutRepetition() {
-        return new CombinationsWithoutRepetition<>(n, k, combinationsVisitor);
+    public VariationsWithoutRepetition<T> withoutRepetition() {
+        return new VariationsWithoutRepetition<>(n, k, variationsVisitor);
     }
 
     @Override
     public long count() {
-        return empty() ? 0 : Combinatorics.binomial(n + k - 1, k);
+        return empty() ? 0 : pow(n, k);
     }
 
     @Override
@@ -58,7 +55,7 @@ public class CombinationsWithRepetition<T> extends Combinations<T> {
 
         @Override
         public T next() {
-            final T combination = combinationsVisitor.apply(index);
+            final T variation = variationsVisitor.apply(index);
             int i = k - 1;
 
             while ((i >= 0) && (indexAt(i) == indexAt(i + 1))) {
@@ -67,19 +64,26 @@ public class CombinationsWithRepetition<T> extends Combinations<T> {
 
             if (i >= 0) {
                 index[i]++;
-
                 for (; i < k - 1; i++) {
-                    index[i + 1] = index[i];
+                    index[i + 1] = 0;
                 }
             } else {
                 nextAvailable = false;
             }
 
-            return combination;
+            return variation;
         }
 
         private int indexAt(int i) {
             return i < k ? index[i] : n - 1;
         }
+    }
+
+    private static long pow(long a, long b) {
+        long value = 1;
+        for (int i = 1; i <= b; i++) {
+            value *= a;
+        }
+        return value;
     }
 }

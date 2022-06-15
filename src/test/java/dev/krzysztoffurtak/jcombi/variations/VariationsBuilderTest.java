@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package dev.krzysztoffurtak.jcombi.combinations;
+package dev.krzysztoffurtak.jcombi.variations;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,95 +28,107 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CombinationsBuilderTest {
+class VariationsBuilderTest {
     @Test
-    @DisplayName("Verify combinations builder for generic type")
-    void verifyCombinationsWithoutRepetitionBuilderForGenericType() {
+    @DisplayName("Verify variations builder for generic type")
+    void verifyVariationsWithoutRepetitionBuilderForGenericType() {
         // Given
         final String[] inputSet = new String[] { "A", "B", "C" };
         final int k = 2;
 
         // When
-        final var combinations =
-                CombinationsBuilder.builder().of(inputSet).choose(k);
+        final var variations =
+                VariationsBuilder.builder().of(inputSet).choose(k);
 
         // Then
-        assertThat(combinations.n()).isEqualTo(inputSet.length);
-        assertThat(combinations.k()).isEqualTo(k);
-        assertThat(combinations.count()).isEqualTo(3);
-        assertThat(combinations).containsExactly(
+        assertThat(variations.n()).isEqualTo(inputSet.length);
+        assertThat(variations.k()).isEqualTo(k);
+        assertThat(variations.count()).isEqualTo(6);
+        assertThat(variations).containsExactly(
                 List.of("A", "B"),
                 List.of("A", "C"),
-                List.of("B", "C")
+                List.of("B", "A"),
+                List.of("B", "C"),
+                List.of("C", "A"),
+                List.of("C", "B")
         );
     }
 
     @Test
-    @DisplayName("Verify combinations with repetition builder for generic type")
-    void verifyCombinationsWithRepetitionBuilderForGenericType() {
+    @DisplayName("Verify variations with repetition builder for generic type")
+    void verifyVariationsWithRepetitionBuilderForGenericType() {
         // Given
         final String[] inputSet = new String[] { "A", "B", "C" };
         final int k = 2;
 
         // When
-        final var combinations =
-                CombinationsBuilder.builder().of(inputSet).choose(k).withRepetition();
+        final var variations =
+                VariationsBuilder.builder().of(inputSet).choose(k).withRepetition();
 
         // Then
-        assertThat(combinations.n()).isEqualTo(inputSet.length);
-        assertThat(combinations.k()).isEqualTo(k);
-        assertThat(combinations.count()).isEqualTo(6);
-        assertThat(combinations).containsExactly(
+        assertThat(variations.n()).isEqualTo(inputSet.length);
+        assertThat(variations.k()).isEqualTo(k);
+        assertThat(variations.count()).isEqualTo(9);
+        assertThat(variations).containsExactly(
                 List.of("A", "A"),
                 List.of("A", "B"),
                 List.of("A", "C"),
+                List.of("B", "A"),
                 List.of("B", "B"),
                 List.of("B", "C"),
+                List.of("C", "A"),
+                List.of("C", "B"),
                 List.of("C", "C")
         );
     }
 
     @Test
-    @DisplayName("Verify combinations builder for ints")
-    void verifyCombinationsWithoutRepetitionBuilderForInts() {
+    @DisplayName("Verify variations builder for ints")
+    void verifyVariationsWithoutRepetitionBuilderForInts() {
         // Given
         final int n = 3;
         final int k = 2;
 
         // When
-        final var combinations = CombinationsBuilder.build(n, k);
+        final var variations = VariationsBuilder.build(n, k);
 
         // Then
-        assertThat(combinations.n()).isEqualTo(n);
-        assertThat(combinations.k()).isEqualTo(k);
-        assertThat(combinations.count()).isEqualTo(3);
-        assertThat(combinations).containsExactly(
+        assertThat(variations.n()).isEqualTo(n);
+        assertThat(variations.k()).isEqualTo(k);
+        assertThat(variations.count()).isEqualTo(6);
+        assertThat(variations).containsExactly(
                 new int[] { 0, 1 },
                 new int[] { 0, 2 },
-                new int[] { 1, 2 }
+                new int[] { 1, 0 },
+                new int[] { 1, 2 },
+                new int[] { 2, 0 },
+                new int[] { 2, 1 }
         );
     }
 
     @Test
-    @DisplayName("Verify combinations with repetition builder for ints")
-    void verifyCombinationsWithRepetitionBuilderForInts() {
+    @DisplayName("Verify variations with repetition builder for ints")
+    void verifyVariationsWithRepetitionBuilderForInts() {
         // Given
         final int n = 3;
         final int k = 2;
 
         // When
-        final var combinations = CombinationsBuilder.build(n, k).withRepetition();
+        final var variations = VariationsBuilder.build(n, k).withRepetition();
 
         // Then
-        assertThat(combinations.n()).isEqualTo(n);
-        assertThat(combinations.k()).isEqualTo(k);
-        assertThat(combinations.count()).isEqualTo(6);
-        assertThat(combinations).containsExactly(
+        assertThat(variations.n()).isEqualTo(n);
+        assertThat(variations.k()).isEqualTo(k);
+        assertThat(variations.count()).isEqualTo(9);
+        assertThat(variations).containsExactly(
                 new int[] { 0, 0 },
                 new int[] { 0, 1 },
                 new int[] { 0, 2 },
+                new int[] { 1, 0 },
                 new int[] { 1, 1 },
                 new int[] { 1, 2 },
+                new int[] { 2, 0 },
+                new int[] { 2, 1 },
                 new int[] { 2, 2 }
         );
     }

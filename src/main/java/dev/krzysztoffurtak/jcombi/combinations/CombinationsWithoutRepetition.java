@@ -25,18 +25,19 @@ import dev.krzysztoffurtak.jcombi.Combinatorics;
 
 import java.util.Iterator;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 public class CombinationsWithoutRepetition<T> extends Combinations<T> {
 
-    public CombinationsWithoutRepetition(int n, int k, Function<int[], T> combinationVisitor) {
-        super(n, k, combinationVisitor);
+    public CombinationsWithoutRepetition(int n, int k, Function<int[], T> combinationsVisitor) {
+        super(n, k, combinationsVisitor);
         if (k > n) {
             throw new IllegalArgumentException("k must be less or equal to n");
         }
     }
 
     public CombinationsWithRepetition<T> withRepetition() {
-        return new CombinationsWithRepetition<>(n, k, combinationVisitor);
+        return new CombinationsWithRepetition<>(n, k, combinationsVisitor);
     }
 
     @Override
@@ -50,17 +51,9 @@ public class CombinationsWithoutRepetition<T> extends Combinations<T> {
     }
 
     private class Iter implements Iterator<T> {
-        private final int[] index;
-        private boolean nextAvailable;
+        private final int[] index = IntStream.range(0, k).toArray();
 
-        Iter() {
-            this.index = new int[k + 1];
-            for (int i = 0; i < k; i++) {
-                index[i] = i;
-            }
-            index[k] = n;
-            nextAvailable = true;
-        }
+        private boolean nextAvailable = true;
 
         @Override
         public boolean hasNext() {
@@ -69,26 +62,28 @@ public class CombinationsWithoutRepetition<T> extends Combinations<T> {
 
         @Override
         public T next() {
+            final T combination = combinationsVisitor.apply(index);
             int i = k - 1;
-            final T combination = combinationVisitor.apply(index);
 
-            while (index[i] + 1 == index[i + 1]) {
+            while ((i >= 0) && (indexAt(i) + 1 == indexAt(i + 1))) {
                 i--;
-                if (i < 0) {
-                    nextAvailable = false;
-                    break;
-                }
             }
 
-            if (nextAvailable) {
+            if (i >= 0) {
                 index[i]++;
 
                 for (; i < k - 1; i++) {
                     index[i + 1] = index[i] + 1;
                 }
+            } else {
+                nextAvailable = false;
             }
 
             return combination;
+        }
+
+        private int indexAt(int i) {
+            return i < k ? index[i] : n;
         }
     }
 }

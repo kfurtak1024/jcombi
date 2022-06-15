@@ -23,6 +23,10 @@ package dev.krzysztoffurtak.jcombi;
 
 import dev.krzysztoffurtak.jcombi.combinations.CombinationsBuilder;
 import dev.krzysztoffurtak.jcombi.combinations.CombinationsWithoutRepetition;
+import dev.krzysztoffurtak.jcombi.permutations.PermutationsBuilder;
+import dev.krzysztoffurtak.jcombi.permutations.PermutationsWithoutRepetition;
+import dev.krzysztoffurtak.jcombi.variations.VariationsBuilder;
+import dev.krzysztoffurtak.jcombi.variations.VariationsWithoutRepetition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -67,6 +71,66 @@ class CombinatoricsTest {
 
             // Then
             assertThat(combinations).isInstanceOf(CombinationsBuilder.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("Test builders for variations")
+    class VariationsTest {
+        @Test
+        @DisplayName("Should create variations without repetition with use of builder")
+        void testVariationsWithoutRepetition() {
+            // Given
+            final var n = 4;
+            final var k = 2;
+
+            // When
+            final var variations = Combinatorics.variations(n, k);
+
+            // Then
+            assertThat(variations).isInstanceOf(VariationsWithoutRepetition.class);
+            assertThat(variations.n()).isEqualTo(n);
+            assertThat(variations.k()).isEqualTo(k);
+        }
+
+        @Test
+        @DisplayName("Should create variations without repetition with use of builder")
+        void testVariationsWithoutRepetitionBuilder() {
+            // Given
+            // When
+            final var variations = Combinatorics.variations();
+
+            // Then
+            assertThat(variations).isInstanceOf(VariationsBuilder.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("Test builders for permutations")
+    class PermutationsTest {
+        @Test
+        @DisplayName("Should create permutations without repetition with use of builder")
+        void testPermutationsWithoutRepetition() {
+            // Given
+            final var n = 4;
+
+            // When
+            final var permutations = Combinatorics.permutations(n);
+
+            // Then
+            assertThat(permutations).isInstanceOf(PermutationsWithoutRepetition.class);
+            assertThat(permutations.n()).isEqualTo(n);
+        }
+
+        @Test
+        @DisplayName("Should create permutations without repetition with use of builder")
+        void testPermutationsWithoutRepetitionBuilder() {
+            // Given
+            // When
+            final var permutations = Combinatorics.permutations();
+
+            // Then
+            assertThat(permutations).isInstanceOf(PermutationsBuilder.class);
         }
     }
 

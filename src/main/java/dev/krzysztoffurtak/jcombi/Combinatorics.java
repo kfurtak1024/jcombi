@@ -23,6 +23,10 @@ package dev.krzysztoffurtak.jcombi;
 
 import dev.krzysztoffurtak.jcombi.combinations.CombinationsBuilder;
 import dev.krzysztoffurtak.jcombi.combinations.CombinationsWithoutRepetition;
+import dev.krzysztoffurtak.jcombi.permutations.PermutationsBuilder;
+import dev.krzysztoffurtak.jcombi.permutations.PermutationsWithoutRepetition;
+import dev.krzysztoffurtak.jcombi.variations.VariationsBuilder;
+import dev.krzysztoffurtak.jcombi.variations.VariationsWithoutRepetition;
 
 public final class Combinatorics {
     private static final long[] FACTORIALS = new long[] {
@@ -55,6 +59,22 @@ public final class Combinatorics {
 
     public static <T> CombinationsBuilder<T> combinations() {
         return CombinationsBuilder.builder();
+    }
+
+    public static VariationsWithoutRepetition<int[]> variations(int n, int k) {
+        return VariationsBuilder.build(n, k);
+    }
+
+    public static <T> VariationsBuilder<T> variations() {
+        return VariationsBuilder.builder();
+    }
+
+    public static PermutationsWithoutRepetition<int[]> permutations(int n) {
+        return PermutationsBuilder.build(n);
+    }
+
+    public static <T> PermutationsBuilder<T> permutations() {
+        return PermutationsBuilder.builder();
     }
 
     /**
