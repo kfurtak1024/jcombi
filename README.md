@@ -22,7 +22,7 @@
   </a>
 </p>
 
-UNDER CONSTRUCTION!
+🚧 ``UNDER CONSTRUCTION`` 🚧
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/kfurtak1024/jcombi/blob/master/LICENSE) file for details.
